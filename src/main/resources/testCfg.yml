@@ -1,0 +1,43 @@
+execType: concurrent  # (by default) or sequential.
+testsToRun:
+  - testName: Test1
+    description: Test 1
+    username: root
+    password:
+    dbUrl: jdbc:mysql://localhost:3306/tut
+    dbDriverName: com.mysql.jdbc.Driver
+    preQueryCfg: # TODO: complicated field with flexible configuration like number of times to repeat the query, var args etc.
+    queryCfg:
+      query: SELECT ${var1};
+      params:
+        - var1:
+            values:
+              - 2 # TODO: we also wanted to use generation from interval/regex and other kind of stuff so we need multiple formats
+              - 3
+              - 4
+            roundRobin: True # optional, by default False and random distribution is used. Unlikely to be frequently used.
+      queryType: SELECT
+
+      # TODO: other variable formats are:
+      # 1) INTEGERS -> support monotonous generation and distribution?
+      # 2) FLOATS -> support monotonous generation and distribution?
+      # 3) STRINGS of given length (or random length in some interval)
+      # 4) DATETIME or TIMESTAMP. Probably will have to support monotonous generation.
+    queryTimeout: 10
+    connNum: 3
+    repeat: 2 # TODO: move it to queryCfg & postQueryCfg & preQueryCfg?
+    postQueryCfg: # TODO: complicated field with flexible configuration like number of times to repeat the query, var args etc.
+    output: /global/path/to/output/file.csv # TODO: обработать как-то если не указано
+
+
+
+#  - testName: Test2
+#    description: Ich will
+#    username: root
+#    password:
+#    dbUrl: jdbc:mysql://localhost:3306/tut
+#    dbDriverName: com.mysql.jdbc.Driver
+#    query: SELECT 2;
+#    connNum: 2
+#    repeat: 3
+#    queryType: SELECT
